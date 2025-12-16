@@ -48,3 +48,26 @@ RSA relies on the difficulty of factoring a modulus composed of two large prime 
 ## Key Takeaway
 
 When generating an RSA public-private key pair, the modulus should be composed of two large prime numbers to increase the difficulty of computing the factors.
+
+## Python Code
+
+```python
+from Crypto.Util.number import inverse, long_to_bytes
+
+# given values
+n =  17128535096756005524651844930361796834121371055987700334457406254480074049425818227220681239750301789350035449157668182384519264691747574818379872953458614
+e =  65537
+c =  6787292851215106862745645178047313196324306302752779837750316788956629167465449151629776063369354430030768693407430580617575455272358561831191263646879429
+
+# found values
+p =  8564267548378002762325922465180898417060685527993850167228703127240037024712909113610340619875150894675017724578834091192259632345873787409189936476729307
+q =  2
+
+print((p*q) == n) # True
+
+d =  inverse(e, p-1) # compute d = e^-1 mod (p-1)
+
+m =  pow(c, d, n) # decrypt ciphertext to plaintext
+
+print(long_to_bytes(m)) # convert to readable format (flag)
+```
